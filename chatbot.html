@@ -1,0 +1,30 @@
+<div class="chat-container">
+        <button class="chat-button">Chat with Us</button>
+    </div>
+    
+    <script src='https://cdn.jotfor.ms/s/umd/latest/for-embedded-agent.js'></script>
+    <script>
+        window.addEventListener("DOMContentLoaded", function() {
+            window.AgentInitializer.init({
+                agentRenderURL: "https://agent.jotform.com/01954c3d057e769fa9ac2b0e00cababd8eef",
+                rootId: "JotformAgent-01954c3d057e769fa9ac2b0e00cababd8eef",
+                formID: "01954c3d057e769fa9ac2b0e00cababd8eef",
+                queryParams: ["skipWelcome=1", "maximizable=1"],
+                domain: "https://www.jotform.com",
+                isDraggable: false,
+                background: "linear-gradient(180deg, #642CC7 0%, #642CC7 100%)",
+                buttonBackgroundColor: "#4a90e2",
+                buttonIconColor: "#FFFFFF",
+                variant: false,
+                customizations: {
+                    "greeting": "Yes",
+                    "greetingMessage": "Hi! How can I assist you?",
+                    "openByDefault": "No",
+                    "pulse": "Yes",
+                    "position": "right",
+                    "autoOpenChatIn": "0"
+                },
+                isVoice: undefined
+            });
+        });
+    </script>
