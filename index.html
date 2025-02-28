@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PulseX Healthcare</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+            text-align: center;
+            padding-top: 20px;
+        }
+
+        h1 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        .medicine-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 20px;
+            width: 90%;
+            max-width: 1000px;
+        }
+
+        .medicine-card {
+            background: white;
+            color: black;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .medicine-card:hover {
+            transform: scale(1.05);
+        }
+
+        .medicine-card h3 {
+            margin: 10px 0;
+        }
+
+        .medicine-card p {
+            font-size: 18px;
+            font-weight: bold;
+            color: #6a11cb;
+        }
+
+        .button {
+            background-color: #4a90e2;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            font-size: 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 10px;
+        }
+
+        .button:hover {
+            background-color: #357ABD;
+        }
+
+        .cart-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+        }
+
+        .cart-button {
+            background-color: #4a90e2;
+            padding: 10px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            display: none;
+        }
+
+        .cart-modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            color: black;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .remove-btn {
+            background-color: red;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .close-btn {
+            background-color: blue;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>PulseX Healthcare</h1>
+
+    <!-- Cart Button -->
+    <div class="cart-container">
+        <button class="cart-button" id="view-cart">View Cart (<span id="cart-count">0</span>)</button>
+    </div>
+
+    <!-- Medicine List -->
+      <div class="medicine-container">
+        <div class="medicine-card"><h3>Paracetamol 500mg</h3><p>₹20</p><button class="button add-to-cart" data-name="Paracetamol 500mg" data-price="20">Add to Cart</button></div>
+        <div class="medicine-card"><h3>Ibuprofen 400mg</h3><p>₹30</p><button class="button add-to-cart" data-name="Ibuprofen 400mg" data-price="30">Add to Cart</button></div>
+        <div class="medicine-card"><h3>Amoxicillin 500mg</h3><p>₹50</p><button class="button add-to-cart" data-name="Amoxicillin 500mg" data-price="50">Add to Cart</button></div>
+        <div class="medicine-card"><h3>Cetirizine 10mg</h3><p>₹15</p><button class="button add-to-cart" data-name="Cetirizine 10mg" data-price="15">Add to Cart</button></div>
+        <div class="medicine-card"><h3>Omeprazole 20mg</h3><p>₹18</p><button class="button add-to-cart" data-name="Omeprazole 20mg" data-price="18">Add to Cart</button></div>
+        <div class="medicine-card"><h3>Azithromycin 500mg</h3><p>₹60</p><button class="button add-to-cart" data-name="Azithromycin 500mg" data-price="60">Add to Cart</button></div>
+        <div class="medicine-card"><h3>Diclofenac 50mg</h3><p>₹28</p><button class="button add-to-cart" data-name="Diclofenac 50mg" data-price="28">Add to Cart</button></div>
+        <div class="medicine-card"><h3>Losartan 50mg</h3><p>₹40</p><button class="button add-to-cart" data-name="Losartan 50mg" data-price="40">Add to Cart</button></div>
+        <div class="medicine-card"><h3>Aspirin 75mg</h3><p>₹25</p><button class="button add-to-cart" data-name="Aspirin 75mg" data-price="25">Add to Cart</button></div>
+        <div class="medicine-card"><h3>Clopidogrel 75mg</h3><p>₹45</p><button class="button add-to-cart" data-name="Clopidogrel 75mg" data-price="45">Add to Cart</button></div>
+        <div class="medicine-card"><h3>Metoprolol 50mg</h3><p>₹32</p><button class="button add-to-cart" data-name="Metoprolol 50mg" data-price="32">Add to Cart</button></div>
+        <div class="medicine-card"><h3>Simvastatin 10mg</h3><p>₹38</p><button class="button add-to-cart" data-name="Simvastatin 10mg" data-price="38">Add to Cart</button></div>
+        <div class="medicine-card"><h3>Ranitidine 150mg</h3><p>₹22</p><button class="button add-to-cart" data-name="Ranitidine 150mg" data-price="22">Add to Cart</button></div>
+        <div class="medicine-card"><h3>Fexofenadine 120mg</h3><p>₹29</p><button class="button add-to-cart" data-name="Fexofenadine 120mg" data-price="29">Add to Cart</button></div>
+    </div>
+
+    <!-- Cart Modal -->
+    <div class="cart-modal" id="cart-modal">
+        <h2>Your Cart</h2>
+        <ul id="cart-items"></ul>
+        <p>Total: ₹<span id="cart-total">0</span></p>
+        <button class="close-btn" id="close-cart">Close</button>
+    </div>
+<!-- Cart Modal -->
+<div class="cart-modal" id="cart-modal">
+    <h2>Your Cart</h2>
+    <div id="cart-items"></div>
+    <p><strong>Total: ₹<span id="total-price">0</span></strong></p>
+    <button class="close-btn" onclick="closeCart()">Close</button>
+    <button class="button" id="order-medicines">Order Now</button>
+</div>
+
+<script>
+    document.getElementById("order-medicines").addEventListener("click", function() {
+        localStorage.setItem("cart", JSON.stringify(cart)); // Store cart data
+        window.location.href = "order.html"; // Redirect
+    });
+
+    function closeCart() {
+        document.getElementById("cart-modal").style.display = "none";
+    }
+</script>
+
+
+    <script>
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem("cart")) || [];
+            document.getElementById("cart-count").innerText = cart.length;
+            document.getElementById("view-cart").style.display = cart.length > 0 ? "block" : "none";
+        }
+
+        function addToCart(event) {
+            const name = event.target.getAttribute("data-name");
+            const price = parseInt(event.target.getAttribute("data-price"));
+
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+            cart.push({ name, price });
+            localStorage.setItem("cart", JSON.stringify(cart));
+
+            updateCartCount();
+        }
+
+        function showCart() {
+            const cart = JSON.parse(localStorage.getItem("cart")) || [];
+            const cartItemsContainer = document.getElementById("cart-items");
+            const cartTotal = document.getElementById("cart-total");
+
+            cartItemsContainer.innerHTML = "";
+            let total = 0;
+
+            cart.forEach((item, index) => {
+                const li = document.createElement("li");
+                li.classList.add("cart-item");
+                li.innerHTML = `${item.name} - ₹${item.price} 
+                    <button class="remove-btn" data-index="${index}">Remove</button>`;
+                cartItemsContainer.appendChild(li);
+                total += item.price;
+            });
+
+            cartTotal.innerText = total;
+            document.getElementById("cart-modal").style.display = "block";
+
+            document.querySelectorAll(".remove-btn").forEach(button => {
+                button.addEventListener("click", removeFromCart);
+            });
+        }
+
+        function removeFromCart(event) {
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+            const index = event.target.getAttribute("data-index");
+            cart.splice(index, 1);
+            localStorage.setItem("cart", JSON.stringify(cart));
+            showCart();
+            updateCartCount();
+        }
+
+        document.querySelectorAll(".add-to-cart").forEach(button => {
+            button.addEventListener("click", addToCart);
+        });
+
+        document.getElementById("view-cart").addEventListener("click", showCart);
+        document.getElementById("close-cart").addEventListener("click", () => {
+            document.getElementById("cart-modal").style.display = "none";
+        });
+
+        updateCartCount();
+    </script>
+<div style="text-align: center; margin: 20px;">
+    <button class="button" onclick="window.location.href='order.html'">Order Now</button>
+</div>
+<!-- Menu Button -->
+<div class="menu-container">
+    <button class="menu-button">☰ Menu</button>
+    <div class="dropdown-menu">
+        <a href="profile.html">Profile</a>
+        <a href="#" onclick="openChat()">Chatbot</a>
+        <a href="#medicine-list">Medicine List</a>
+    </div>
+</div>
+
+<style>
+    .menu-container {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+    }
+
+    .menu-button {
+        background-color: #4a90e2;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        font-size: 16px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .dropdown-menu {
+        display: none;
+        position: absolute;
+        background: white;
+        border-radius: 5px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        width: 150px;
+        top: 40px;
+        left: 0;
+        z-index: 1000;
+    }
+
+    .dropdown-menu a {
+        display: block;
+        padding: 10px;
+        color: black;
+        text-decoration: none;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .dropdown-menu a:hover {
+        background: #f1f1f1;
+    }
+
+    .menu-container:hover .dropdown-menu {
+        display: block;
+    }
+</style>
+
+<script>
+    function openChat() {
+        alert("Chatbot Opening..."); // Replace this with chatbot opening logic
+    }
+</script>
+<div class="chat-container">
+    </div>
+<body>
+    <div class="container">
+            </div>
+    <div class="chat-container">
+        
+    </div>
+
+    <script src='https://cdn.jotfor.ms/s/umd/latest/for-embedded-agent.js'></script>
+    <script>
+        window.addEventListener("DOMContentLoaded", function () {
+            window.AgentInitializer.init({
+                agentRenderURL: "https://agent.jotform.com/01954c3d057e769fa9ac2b0e00cababd8eef",
+                rootId: "JotformAgent-01954c3d057e769fa9ac2b0e00cababd8eef",
+                formID: "01954c3d057e769fa9ac2b0e00cababd8eef",
+                queryParams: ["skipWelcome=1", "maximizable=1"],
+                domain: "https://www.jotform.com",
+                isDraggable: false,
+                background: "linear-gradient(180deg, #642CC7 0%, #642CC7 100%)",
+                buttonBackgroundColor: "#4a90e2",
+                buttonIconColor: "#FFFFFF",
+                variant: false,
+                customizations: {
+                    "greeting": "Yes",
+                    "greetingMessage": "Hi! How can I assist you?",
+                    "openByDefault": "No",
+                    "pulse": "Yes",
+                    "position": "right",
+                    "autoOpenChatIn": "0"
+                },
+                isVoice: undefined
+            });
+        });
+    </script>
+
+
+</body>
+
+</html>

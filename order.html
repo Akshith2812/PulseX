@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Medicines - PulseX Healthcare</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+            padding-top: 20px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        .order-container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 400px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            text-align: left;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .button {
+            background-color: #4a90e2;
+            color: white;
+            border: none;
+            padding: 15px 20px;
+            font-size: 18px;
+            border-radius: 25px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease-in-out;
+            margin-top: 15px;
+            width: 100%;
+        }
+
+        .button:hover {
+            background-color: #357ABD;
+            transform: scale(1.05);
+        }
+
+        .back-container {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Order Medicines</h1>
+
+    <div class="order-container">
+        <form id="orderForm">
+            <label for="medicineName">Medicine Name:</label>
+            <textarea id="medicineName" name="medicineName" rows="4" readonly></textarea>
+
+            <label for="totalPrice">Total Price:</label>
+            <input type="text" id="totalPrice" name="totalPrice" readonly>
+
+            <label for="address">Delivery Address:</label>
+            <textarea id="address" name="address" rows="3" required></textarea>
+
+            <label for="contact">Contact Number:</label>
+            <input type="tel" id="contact" name="contact" required>
+
+            <label for="payment">Payment Method:</label>
+            <select id="payment" name="payment">
+                <option value="cod">Cash on Delivery</option>
+                <option value="online">Online Payment</option>
+            </select>
+
+            <button type="submit" class="button">Place Order</button>
+        </form>
+    </div>
+
+    <div class="back-container">
+        <a href="index.html">
+            <button class="button">Back to Home</button>
+        </a>
+    </div>
+
+   <script>
+    // Retrieve cart data from localStorage
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    if (cart.length > 0) {
+        let orderDetails = new Set();
+        let totalPrice = 0;
+
+        cart.forEach(item => {
+            const name = item.name || "Unknown Item";
+            const price = parseFloat(item.price) || 0;
+
+            orderDetails.add(name);
+            totalPrice += price;
+        });
+
+        document.getElementById("medicineName").value = Array.from(orderDetails).join("\n");
+        document.getElementById("totalPrice").value = `₹${totalPrice.toFixed(2)}`;
+    } else {
+        document.getElementById("medicineName").value = "No items in cart.";
+        document.getElementById("totalPrice").value = "₹0.00";
+    }
+
+    // Handle order submission
+    document.getElementById("orderForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+
+        // Store order details in localStorage for confirmation page
+        const orderData = {
+            medicineNames: document.getElementById("medicineName").value,
+            totalPrice: document.getElementById("totalPrice").value,
+            address: document.getElementById("address").value,
+            contact: document.getElementById("contact").value,
+            payment: document.getElementById("payment").value
+        };
+
+        localStorage.setItem("orderData", JSON.stringify(orderData));
+
+        // Clear cart after order and redirect to confirmation page
+        localStorage.removeItem("cart");
+        window.location.href = "order-confirmation.html";
+    });
+</script>
+<div class="chat-container">
+    </div>
+<body>
+    <div class="container">
+            </div>
+    <div class="chat-container">
+        
+    </div>
+
+    <script src='https://cdn.jotfor.ms/s/umd/latest/for-embedded-agent.js'></script>
+    <script>
+        window.addEventListener("DOMContentLoaded", function () {
+            window.AgentInitializer.init({
+                agentRenderURL: "https://agent.jotform.com/01954c3d057e769fa9ac2b0e00cababd8eef",
+                rootId: "JotformAgent-01954c3d057e769fa9ac2b0e00cababd8eef",
+                formID: "01954c3d057e769fa9ac2b0e00cababd8eef",
+                queryParams: ["skipWelcome=1", "maximizable=1"],
+                domain: "https://www.jotform.com",
+                isDraggable: false,
+                background: "linear-gradient(180deg, #642CC7 0%, #642CC7 100%)",
+                buttonBackgroundColor: "#4a90e2",
+                buttonIconColor: "#FFFFFF",
+                variant: false,
+                customizations: {
+                    "greeting": "Yes",
+                    "greetingMessage": "Hi! How can I assist you?",
+                    "openByDefault": "No",
+                    "pulse": "Yes",
+                    "position": "right",
+                    "autoOpenChatIn": "0"
+                },
+                isVoice: undefined
+            });
+        });
+    </script>
+
+
+
+</body>
+
+</html>
